@@ -1,0 +1,215 @@
+﻿<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3ZP7D6Bl9YeIFsssrd1Zdbec2qsfgAWs&callback=initMap">
+</script>
+
+<script type="text/javascript">
+        var markers = [];
+         function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            var infoWindow = new google.maps.InfoWindow();
+            var lat_lng = new Array();
+            var latlngbounds = new google.maps.LatLngBounds();
+            for (i = 0; i < markers.length; i++) {
+				//if(i==0 && i==markers.length -1){
+					var data = markers[i]
+					var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+					lat_lng.push(myLatlng);
+					var marker = new google.maps.Marker({
+						position: myLatlng,
+						map: map,
+						label:data.label,
+						title: data.title
+					});
+					latlngbounds.extend(marker.position);
+					(function (marker, data) {
+						google.maps.event.addListener(marker, "click", function (e) {
+							infoWindow.setContent(data.description);
+							infoWindow.open(map, marker);
+						});
+					})(marker, data);
+				//}
+            }
+            map.setCenter(latlngbounds.getCenter());
+            map.fitBounds(latlngbounds);
+
+            //***********ROUTING****************//
+
+            //Intialize the Path Array
+            var path = new google.maps.MVCArray();
+
+            //Intialize the Direction Service
+            var service = new google.maps.DirectionsService();
+
+            //Set the Path Stroke Color
+            var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+
+            //Loop and Draw Path Route between the Points on MAP
+            for (var i = 0; i < lat_lng.length; i++) {
+                if ((i +1) < lat_lng.length) {
+                    var src = lat_lng[i];
+                    var des = lat_lng[i+1];
+                    path.push(src);
+                    poly.setPath(path);
+                    service.route({
+                        origin: src,
+                        destination: des,
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING
+                    }, function (result, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                           // for (var i = 0, len = result.routes[i].overview_path.length; i < len; i++) {
+                                path.push(result.routes[i].overview_path[i]);
+                            //}
+                        }
+                    });
+                }
+            }
+        }
+</script>
+
+@*<h2>Find a Route</h2>
+    <p>Enter starting point and Destination Point to search for route</p>
+
+    <hr />
+    <form name="myForm" method="post" id="InputForm">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <b>Start From:</b>
+                <input id="mylist1" type="text" list="stops" name="start">
+                <datalist id="stops">
+                    @foreach (BusApp.Models.Stop stop in ViewBag.stops)
+                    {
+                        <option data-value="@stop.Name" value="@stop.Name"></option>
+                    }
+
+                </datalist>
+                <b>Destination:</b>
+                <input id="mylist2" type="text" list="stopsdest" name="dest">
+                <datalist id="stopsdest">
+                    @foreach (BusApp.Models.Stop stop in ViewBag.stops)
+                    {
+                        <option data-value="@stop.Name" value="@stop.Name"></option>
+                    }
+                </datalist>
+                <a href="#" id="submit11">SUBMIT</a>
+            </div>
+        </div>
+
+    </form>
+    <hr />
+    <span id="errorInValidValueForController" style="color:red;">@ViewBag.Error</span>
+    <span id="errorInValidValue" style="color:red;"></span>
+
+    <div id="dvMap" style="width: 600px; height: 600px">
+    </div>
+
+    @section scripts
+    {
+        <script>
+
+            var myfunction = function (e) {
+                var input = e.target,
+                list = input.getAttribute('list'),
+                options = document.querySelectorAll('#' + list + ' option'),
+                label = input.value;
+                for (var i = 0; i < options.length; i++) {
+                    var option = options[i];
+
+                    if (option.value === label) {
+                        input.value = option.getAttribute('data-value');
+                        break;
+                    }
+                    else {
+                        input.value = null;
+                    }
+                }
+                if (input.value == "") {
+                    document.getElementById('errorInValidValue').innerText = 'Select an it from the list';
+                }
+                else {
+                    document.getElementById('errorInValidValue').innerText = '';
+                }
+            };
+            var inputs = document.querySelectorAll('input[list]');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('blur', function (e) {
+                    myfunction(e);
+                });
+            };
+
+
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#submit11').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            start: $('#mylist1').val(),
+                            dest: $('#mylist2').val()
+                        },
+                        url: '@Url.Action("Index", "FindRoute")',
+                        success: function (response) {
+
+                            window.response = response;
+                            var ressStr = '';
+                            ressStr += '<b> ' + response.length + ' result(s)</b><br/>';
+                            for (var i = 0; i < response.length; i++) {
+                                ressStr += '<div id="result'+ i+'" class="results">'
+                                if (response.length > 1) {
+                                    i++;
+                                    ressStr += 'Result no ' + i  + '<br/>';
+                                    i--;
+                                }
+
+                                ressStr += 'Total Length: ' + response[i].TotalLength.toFixed(2) + ' km.<br/>';
+                                ressStr += 'Total Fare: Rs.' + response[i].TotalFare.toFixed(2) + '<br/>';
+                                ressStr += 'Total Approx Time: ' + response[i].TotalApproxTimeInMints.toFixed(1) + ' Minutes.<br/>';
+                                ressStr += 'Buses to take ' + response[i].busesToTake.length.toFixed(2) + '<br/>';
+                                for (var j = 0; j < response[i].busesToTake.length; j++) {
+                                    if (response[i].busesToTake.length > 1 && j === 0) {
+                                        ressStr += 'Firstly ';
+                                    }
+                                    else if (j > 0) {
+                                        ressStr += 'Than ';
+                                    }
+                                    if (response[i].busesToTake[j].journeyDirection === 0) {
+                                        ressStr += 'take Bus no <b>' + response[i].busesToTake[j].routeNo.Name + '</b> from <b>';
+                                        ressStr += response[i].busesToTake[j].stops[0].Stop.Name + '</b> Stop and ride upto <b>';
+                                        ressStr += response[i].busesToTake[j].stops[
+                                            response[i].busesToTake[j].stops.length - 1
+                                        ].Stop.Name + '</b> Stop <br/>';
+                                    }
+                                    else if (response[i].busesToTake[j].journeyDirection === 1) {
+                                        ressStr += 'take Bus no <b>' + response[i].busesToTake[j].routeNo.Name + '</b> from <b>';
+                                        ressStr += response[i].busesToTake[j].stops[
+                                            response[i].busesToTake[j].stops.length - 1
+                                        ].Stop.Name + '</b> Stop and ride upto <b>';
+                                        ressStr += response[i].busesToTake[j].stops[0].Stop.Name + '</b> Stop <br/>';
+                                    }
+                                    else {
+                                        ressStr += 'ERROR<br/>';
+                                    }
+                                }
+                                ressStr += '</div><br/><br/>'
+                            }
+                            $('#dvMap').html(ressStr);
+                        }
+                    });
+                });
+
+
+
+            });
+
+        </script>
+
+    }
+
+
+
+*@

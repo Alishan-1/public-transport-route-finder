@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8f4b184015f64d1890f43c2efe36ee37" Name="Diagram1" ZoomLevel="94">
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.City" Width="1.5" PointX="3.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.Country" Width="1.5" PointX="0.875" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.Province" Width="1.5" PointX="5.625" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.RouteDetail" Width="1.5" PointX="8.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.Route" Width="1.5" PointX="6.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.Stop" Width="1.5" PointX="8.125" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.sysdiagram" Width="1.75" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_Cities_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_Cities_Provinces" ManuallyRouted="false" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_Routes_Cities" ManuallyRouted="false" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_Stops_Cities" ManuallyRouted="false" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_Provinces_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_RouteDetail_Routes" ManuallyRouted="false" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_RouteDetail_Stops" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PublicTransportRouteFinderModel.RouteType" Width="1.875" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="PublicTransportRouteFinderModel.FK_Routes_RouteTypes" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

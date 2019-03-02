@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @*<h1>Public Transport Route Finder</h1>*@
+    
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 4</div>
+            <img src="~/images/slides images/BUS1.jpg" width="1000" height="400"/>
+            <div class="text">Lahore Metro Bus on Road</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 4</div>
+            <img src="~/images/slides images/BUS2.jpg" width="1000" height="400"/>
+            <div class="text">Lahore Transport Company DAEWOO Buses on Road</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 4</div>
+            <img src="~/images/slides images/BUS3.jpg" width="1000" height="400"/>
+            <div class="text">Lahore Metro Buses on Station</div>
+        </div>
+        
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img src="~/images/slides images/BUS4.jpg" width="1000" height="400"/>
+                <div class="text">LTC Buses Shining in plesent Weather in Parking</div>
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+    <p class="lead" style="text-align:center">Want to travel by public transport and do not know which route No. is suitable for you?</p>
+    <p style="text-align:center"><a href="/findroute" class="btn btn-primary btn-lg">Find It Here &raquo;</a></p>
+    </div>
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("active", "");
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 5000); // Change image every 2 seconds
+        }
+
+        function plusSlides(n) {
+            showSlidesManual(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlidesManual(slideIndex = n);
+        }
+
+        function showSlidesManual(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>
+    @section Styles {
+        <link href="@Url.Content("~/Content/Slide.css")" rel="stylesheet" type="text/css" />
+    }
+
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Countries", "Index", "Countries")</h2>
+
+
+            <p>
+                List of countries entered in the system - Countries code file.
+            </p>
+            <p><a class="btn btn-default" href="@Url.Action("Index","Countries")">View List --&gt;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Provinces", "Index", "Provinces")</h2>
+
+
+            <p>
+                Each Country is subdivided into Provinces or States - List of Provinces or States entered in the system - Provinces code file.
+            </p>
+            <p><a class="btn btn-default" href="@Url.Action( "Index", "Provinces")">View List --&gt;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Cities", "Index", "Cities")</h2>
+            <p>Each Province or state  has many Cities, List of those cities entered in the system - cities code file.</p>
+            <p><a class="btn btn-default" href="@Url.Action("Index", "Cities")">View List --&gt;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Stops", "Index", "Stops")</h2>
+            <p>There are severel places in the city from where buses pass and drop or pick passengers called the Bus Stops.</p>
+            <p><a class="btn btn-default" href="@Url.Action( "Index", "Stops")">View List --&gt;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Routes", "Index", "Routes")</h2>
+            <p>Every bus is assigned a number which defines the stops through which the bus passes. This number is called a route number</p>
+            <p><a class="btn btn-default" href="@Url.Action( "Index", "Routes")">View List --&gt;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("RouteDetails", "Index", "RouteDetails")</h2>
+            <p>Route Details is the list of stops in sequence through which a particular route passes and the distance between these stops.</p>
+            <p><a class="btn btn-default" href="@Url.Action( "Index", "RouteDetails")">View List --&gt;</a></p>
+        </div>
+
+    </div>

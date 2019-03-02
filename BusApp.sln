@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusApp", "BusApp\BusApp.csproj", "{A7C022D9-A79D-478A-B58B-209A6F6E7495}"
+EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ModelingProject1", "ModelingProject1\ModelingProject1.modelproj", "{3E9654D1-64EB-4580-A7F6-D955EC9BC251}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettingApiData", "GettingApiData\GettingApiData.csproj", "{F187B323-D6AB-4FB3-864B-513FB6918E33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7C022D9-A79D-478A-B58B-209A6F6E7495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7C022D9-A79D-478A-B58B-209A6F6E7495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7C022D9-A79D-478A-B58B-209A6F6E7495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7C022D9-A79D-478A-B58B-209A6F6E7495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9654D1-64EB-4580-A7F6-D955EC9BC251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9654D1-64EB-4580-A7F6-D955EC9BC251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9654D1-64EB-4580-A7F6-D955EC9BC251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9654D1-64EB-4580-A7F6-D955EC9BC251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F187B323-D6AB-4FB3-864B-513FB6918E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F187B323-D6AB-4FB3-864B-513FB6918E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F187B323-D6AB-4FB3-864B-513FB6918E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F187B323-D6AB-4FB3-864B-513FB6918E33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://pearlsol.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BusApp\\BusApp.csproj
+		SccProjectName1 = BusApp
+		SccLocalPath1 = BusApp
+		SccProjectUniqueName2 = ModelingProject1\\ModelingProject1.modelproj
+		SccProjectName2 = ModelingProject1
+		SccLocalPath2 = ModelingProject1
+		SccProjectUniqueName3 = GettingApiData\\GettingApiData.csproj
+		SccProjectName3 = GettingApiData
+		SccLocalPath3 = GettingApiData
+	EndGlobalSection
+EndGlobal

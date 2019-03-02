@@ -1,0 +1,94 @@
+﻿@model BusApp.Models.Route
+
+@{
+    ViewBag.Title = "Map of Route - " + Model.Name;
+}
+
+<h2>ViewMap</h2>
+
+<div>
+    <h4>@ViewBag.Title</h4>
+    <hr />
+    <div id="MapDiv" style="width:auto; height:600px; padding:10px;">
+
+    </div>
+</div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3ZP7D6Bl9YeIFsssrd1Zdbec2qsfgAWs&callback=myMap">
+</script>
+<script>
+    var myMap = function()
+    {
+        var markers = [];
+        var marker = {
+            label: '',
+            title: '',
+            lat: '',
+            lng: '',
+            description: ''
+        };
+
+        @foreach (var routeDetail in Model.RouteDetails)
+        {
+
+            <text>
+            marker = {
+                label: '',
+                title: '',
+                lat: '',
+                lng: '',
+                description: ''
+            };
+            marker.label = '';
+            marker.title = '@routeDetail.Stop.Name';
+            marker.lat = @routeDetail.Stop.Latitude;
+            marker.lng = @routeDetail.Stop.Longitude;
+            marker.description = '@routeDetail.Stop.Name';
+            markers.push(marker);</text>
+        }
+        initMyMap( markers,"MapDiv");
+    }
+
+    function initMyMap(markers, mapdivId) {
+        var mapOptions = {
+            center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById(mapdivId), mapOptions);
+        var infoWindow = new google.maps.InfoWindow();
+        var lat_lng = new Array();
+        var latlngbounds = new google.maps.LatLngBounds();
+        for (i = 0; i < markers.length; i++) {
+            //if(i==0 && i==markers.length -1){
+            var data = markers[i]
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            lat_lng.push(myLatlng);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                label: data.label,
+                title: data.title
+            });
+            latlngbounds.extend(marker.position);
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent(data.description);
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+            //}
+        }
+        map.setCenter(latlngbounds.getCenter());
+        map.fitBounds(latlngbounds);
+
+        var JourneyPath = new google.maps.Polyline({
+            path: lat_lng,
+            strokeColor: "#0000FF",
+            strokeOpacity: 0.8,
+            strokeWeight: 2
+        });
+        JourneyPath.setMap(map);
+    }
+</script>
+

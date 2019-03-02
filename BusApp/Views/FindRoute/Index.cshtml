@@ -1,0 +1,77 @@
+﻿@model BusApp.Models.FindRouteInput
+
+@{
+    ViewBag.Title = "Find a Route";
+}
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="imghead">
+
+            <div id="dvMap" style="height:100px;">
+
+            </div>
+            
+                <div id="MapDiv">
+
+                </div>
+            
+            <div id="SearchArea">
+                <p style="color:orange; text-align:center;font-size:32px; font-family:Cooper">Enter Pickup Point and Destination Point to Search for Route</p>
+                <div class="col-md-4 col-md-offset-4">
+                    
+                    <form>
+                        <div class="form-group">
+                            <label for="pickup">Pickup:</label>
+                            <input type="text" id="pickup" class="form-control" name="start" list="stops">
+                            <datalist id="stops">
+                            @foreach (BusApp.Models.Stop stop in ViewBag.stops)
+                            {
+                                <option value="@stop.Name"></option>
+                            }
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destination:</label>
+                            <input type="text" id="destination" class="form-control" name="dest" list="stops">
+                        </div>
+                        <div class="form-group">
+                            <a id="SearchBtn" href="#" class="btn btn-default">
+                                <span id="LoadingIcon" class=""></span>
+                                <span id="SearchBtnTxt"> Search</span>
+                            </a>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div id="noStopMatch" class="alert alert-danger" role="alert" style="display:none; font-size: 12px; padding:2px;">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    Select a stop from the list
+                </div><br />
+                <div id="StopsNotSelected" class="alert alert-danger" role="alert" style="display:none; font-size: 12px;  padding:2px;">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    please Select pickup and destination stops first!
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="@Url.Content("~/Content/second.css")" rel="stylesheet" type="text/css" />
+}
+
+@section scripts{
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3ZP7D6Bl9YeIFsssrd1Zdbec2qsfgAWs">
+</script>
+<script src="~/Scripts/index.js"></script>
+}
+
