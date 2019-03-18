@@ -3,7 +3,7 @@
 if you want to go from stop A to stop B but you do not know which routes to follow, the public-transport-route-finder will help you decide
 
 ## Live Demo
-[See it here](http://34.80.91.54/)
+[See it here](http://ptrf.tk/)
 
 ## Getting Started
 
